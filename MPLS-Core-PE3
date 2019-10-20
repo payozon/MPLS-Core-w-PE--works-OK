@@ -1,0 +1,205 @@
+!
+!
+
+!
+upgrade fpd auto
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname PE3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+!
+multilink bundle-name authenticated
+mpls ldp loop-detection
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+!
+archive
+ log config
+  hidekeys
+!
+!
+ip tcp synwait-time 5
+!
+track 1 interface Serial5/0 line-protocol
+!
+!
+!
+!
+interface Loopback0
+ ip address 7.7.7.7 255.255.255.255
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface FastEthernet1/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/4
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/5
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/6
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/7
+ no ip address
+ shutdown
+ duplex half
+!
+interface Serial5/0
+ no ip address
+ serial restart-delay 0
+!
+interface Serial5/1
+ ip address 10.2.1.9 255.255.255.254
+ mpls ip
+ serial restart-delay 0
+!
+interface Serial5/2
+ ip address 10.2.1.7 255.255.255.254
+ mpls ip
+ serial restart-delay 0
+!
+interface Serial5/3
+ no ip address
+ serial restart-delay 0
+!
+!
+router ospf 1
+ router-id 7.7.7.7
+ log-adjacency-changes
+ network 7.7.7.7 0.0.0.0 area 0
+ network 10.1.1.0 0.0.0.255 area 0
+ network 10.2.1.0 0.0.0.255 area 0
+!
+router bgp 65000
+ no synchronization
+ bgp log-neighbor-changes
+ neighbor 5.5.5.5 remote-as 65000
+ neighbor 5.5.5.5 update-source Loopback0
+ neighbor 6.6.6.6 remote-as 65000
+ neighbor 6.6.6.6 update-source Loopback0
+ neighbor 8.8.8.8 remote-as 65000
+ neighbor 8.8.8.8 update-source Loopback0
+ no auto-summary
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+logging alarm informational
+no cdp log mismatch duplex
+!
+!
+!
+!
+!
+mpls ldp router-id Loopback0 force
+!
+control-plane
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ login
+!
+
+!
+webvpn cef
+!
+event manager applet NO-SH 
+ event track 1 state any
+ action 1 cli command "enable"
+ action 10 cli command "no sh"
+ action 11 cli command "end"
+ action 12 syslog msg "Serial interfaces unshut"
+ action 2 cli command "conf t"
+ action 3 cli command "int se5/0"
+ action 4 cli command "no sh"
+ action 5 cli command "int se5/1"
+ action 6 cli command "no sh"
+ action 7 cli command "int se5/2"
+ action 8 cli command "no sh"
+ action 9 cli command "int se5/3"
+ action 9.1 cli command "no sh"
+ action 9.2 cli command "end"
+!
+end
