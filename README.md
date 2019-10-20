@@ -16,17 +16,17 @@ c7200-adventerprisek9_sna-mz.124-15.T1.image
 ## Config Filez list
 ### The MPLS on OSPF only no-BGP 4-routers CORE 
 ```
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-P1
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-P2
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-P3
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-P4
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-P1
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-P2
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-P3
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-P4
 ```
 ### The Provider's Edge 4x routers with BGP
 ```
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-PE1
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-PE2
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-PE3
-https://raw.githubusercontent.com/payozon/MPLS-Core-w-PE--works-OK/master/.MPLS-Core-PE4
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-PE1
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-PE2
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-PE3
+https://github.com/payozon/MPLS-Core-w-PE--works-OK/blob/master/.MPLS-Core-PE4
 ```
 
 ## Topology Summary 
