@@ -1,0 +1,210 @@
+!## MPLS Core P1 router
+
+!
+upgrade fpd auto
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname MPLS-Core-P1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+ip gratuitous-arps
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+!
+multilink bundle-name authenticated
+mpls ldp loop-detection
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+archive
+ log config
+  hidekeys
+!
+!
+ip tcp synwait-time 5
+!
+track 1 interface Serial5/0 line-protocol
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface FastEthernet1/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/0
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/4
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/5
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/6
+ no ip address
+ shutdown
+ duplex half
+!
+interface Ethernet2/7
+ no ip address
+ shutdown
+ duplex half
+!
+interface Serial5/0
+ description **to P2**
+ ip address 10.1.1.0 255.255.255.254
+ mpls ip
+ serial restart-delay 0
+!
+interface Serial5/1
+ ip address 10.2.1.0 255.255.255.254
+ mpls ip
+ serial restart-delay 0
+!
+interface Serial5/2
+ ip address 10.2.1.2 255.255.255.254
+ mpls ip
+ serial restart-delay 0
+!
+interface Serial5/3
+ description **to P4**
+ ip address 10.1.1.2 255.255.255.254
+ mpls ip
+ serial restart-delay 0
+!
+!
+router ospf 1
+ router-id 1.1.1.1
+ log-adjacency-changes
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.1.1.0 0.0.0.255 area 0
+ network 10.2.1.0 0.0.0.255 area 0
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+logging alarm informational
+no cdp log mismatch duplex
+cdp source-interface Loopback0
+!
+!
+!
+!
+!
+mpls ldp router-id Loopback0 force
+!
+control-plane
+!
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ login
+!
+
+!
+webvpn cef
+!
+event manager applet NO-SH
+ event track 1 state any
+ action 1 cli command "enable"
+ action 10 cli command "no sh"
+ action 11 cli command "end"
+ action 12 syslog msg "Serial interfaces unshut"
+ action 2 cli command "conf t"
+ action 3 cli command "int se5/0"
+ action 4 cli command "no sh"
+ action 5 cli command "int se5/1"
+ action 6 cli command "no sh"
+ action 7 cli command "int se5/2"
+ action 8 cli command "no sh"
+ action 9 cli command "int se5/3"
+event manager applet NOSHUT3
+ event syslog pattern "Interface Serial5/0, changed state to administratively down"
+ action 1 cli command "enable"
+ action 10 cli command "no sh"
+ action 11 cli command "end"
+ action 2 cli command "configure terminal"
+ action 3 cli command "interface serial5/0"
+ action 4 cli command "no shut"
+ action 5 cli command "interface serial5/1"
+ action 6 cli command "no sh"
+ action 7 cli command "int se5/2"
+ action 8 cli command "no sh"
+ action 9 cli command "int se5/3"
+!
+end
